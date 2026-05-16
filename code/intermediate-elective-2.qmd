@@ -1,0 +1,28 @@
+---
+title: "Intermediate Elective 2"
+author: "Natalie Chen"
+format: pdf
+---
+# ```{r}
+# #| label: data
+# 
+# 
+# 
+# 
+# ```
+
+```{r}
+#| label: packages
+
+
+
+
+```
+
+```{r}
+#| label: data
+
+
+
+
+```
