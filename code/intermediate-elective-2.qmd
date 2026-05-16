@@ -61,8 +61,8 @@ water_quality <- read_xlsx(here("data", "Aquatic Sampling Data-2026-03-10.xlsx")
 
 #1. Explain
 
-- I chose the most popular Ikea designers because I felt that it would be a good type of visualization to show the most abundance invertebrate species at NCOS.
-- This visualization makes sense for this the invertebrate visualization because there are 15+ different designers, which is similar to how many different taxa there are.
+- I chose the most popular Ikea designers visualization because I felt that it would be a good type of visualization to showcase the most abundance invertebrate species at NCOS.
+- This visualization makes sense for this the invertebrate visualization because there are 15+ different designers, which is similar to how many different taxa there are. And the different sized bars can account for differences in abundance.
 - All Taxa will be shown in my visualization. There will be a different color for each taxon, and the amount of the color will show how abundant they show up in samples.
 
 #2. Plan
