@@ -6,26 +6,30 @@ library(tidyverse)
 library(RColorBrewer)
 
 
-data <- ikea %>%
+data1 <- ikea %>%
   group_by(category, designer) %>%
   tally() %>%
   ungroup()
 
 
-data <- data %>%
+data1 <- data1 %>%
+  # deleted the first 143 rows
   slice(-1:-143) %>%
+  # keep only designers that are not IKEA of Sweden
   filter(!designer == "IKEA of Sweden")
 
 
-data$designer <- str_replace_all(data$designer, "/IKEA of Sweden", "")
-data$designer <- str_replace_all(data$designer, "IKEA of Sweden/", "")
+# remove any "ikea of sweden" under designer
+data1$designer <- str_replace_all(data1$designer, "/IKEA of Sweden", "")
+data1$designer <- str_replace_all(data1$designer, "IKEA of Sweden/", "")
 
 
-dt <- data %>%
+# take the top 15 designers
+dt <- data1 %>%
   arrange(desc(n)) %>%
   filter(n>15)
 
-
+# set factors
 dt <- mutate_at(dt, vars(category), as.factor)
 dt <- mutate_at(dt, vars(designer), as.factor)
 glimpse(dt)
