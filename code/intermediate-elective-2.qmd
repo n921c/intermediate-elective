@@ -317,5 +317,11 @@ p <- ggplot(data)+
 # display plot
 p
 
-
 ```
+
+
+# 4. Process
+
+- The process of using someone else's code was a little difficult as I had to go through each line of code to see what the code did. 
+- A challenge I encountered was the lack of comments in the R file that I used. 
+- This visualization is different since it shows just one variable in bars in a circular shape without any axes. 
