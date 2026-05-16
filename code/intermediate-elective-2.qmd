@@ -252,6 +252,8 @@ data <- mutate_at(data, vars(taxon), as.factor)
 
 ``` {r}
 #| label: visualization
+#| fig-height: 4
+#| fig-width: 8
 
 # reorder data df and set a new row id
 data <- data[order(-data$log_total_avg), ]
@@ -290,7 +292,8 @@ p <- ggplot(data)+
     axis.text = element_blank(),
     axis.title = element_blank(),
     panel.grid = element_blank(),
-    plot.margin = unit(rep(-1,4,), "cm")) +
+    plot.margin = unit(rep(-1,4,), "cm"),
+    legend.margin = margin(0, 2, 0, 0)) +
   
   # setting labels
   annotate(geom = "text",
