@@ -67,6 +67,8 @@ water_quality <- read_xlsx(here("data", "Aquatic Sampling Data-2026-03-10.xlsx")
 
 #2. Plan
 
+<img width="1667" height="803" alt="Image" src="https://github.com/user-attachments/assets/30628a77-b0df-4695-a058-7f0314750e8e" />
+
 
 
 
@@ -240,11 +242,6 @@ glimpse(data)
 
 ``` {r}
 #| label: visualization
-empty_bar <- 2
-# Add lines to the initial dataset
-# to_add <- matrix(NA, empty_bar, ncol(data))
-# colnames(to_add) <- colnames(data)
-# data <- rbind(data, to_add)
 
 data <- data[order(-data$log_total_avg), ]
 data$id <- seq(1, nrow(data))
@@ -268,7 +265,7 @@ p <- ggplot(data)+
   geom_bar(aes(x=as.factor(id), y=log_total_avg, fill=taxon), stat="identity") +
   scale_fill_manual(values=pal)+
   
-  ylim(-30,90) +
+  ylim(-40,90) +
   
   theme_bw() + 
   
@@ -282,11 +279,10 @@ p <- ggplot(data)+
   
   
   annotate(geom = "text",
-           x=0,y=-50,
+           x=0,y= -30,
            hjust=.5, vjust=1,
-           label="IKEA most popular\n designers",
-           size=4.3, lineheight=.8,
-           family="Staatliches Regular",
+           label="Taxon Abundance \n at NCOS",
+           size=3, lineheight=.8,
            color="black") +
   
   
