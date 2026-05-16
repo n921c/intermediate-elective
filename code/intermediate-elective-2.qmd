@@ -3,13 +3,7 @@ title: "Intermediate Elective 2"
 author: "Natalie Chen"
 format: pdf
 ---
-# ```{r}
-# #| label: data
-# 
-# 
-# 
-# 
-# ```
+
 
 ```{r}
 #| label: packages
@@ -26,3 +20,13 @@ format: pdf
 
 
 ```
+
+#1. 
+
+- I chose the most popular Ikea designers because I felt that it would be a good type of visualization to show the most abundance invertebrate species at NCOS.
+- This visualization makes sense for this the invertebrate visualization because there are 15+ different designers, which is similar to how many different taxa there are.
+- All Taxa will be shown in my visualization. There will be a different color for each taxon, and the amount of the color will show how abundant they show up in samples.
+
+
+
+
