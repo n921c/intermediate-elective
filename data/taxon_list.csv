@@ -1,0 +1,51 @@
+﻿verbatim_name,taxonRank,scientificName,kingdom,Phylum,Class,Subclass,Superorder,Order,Infraorder,Family,Subfamily,Tribe,Genus,comments
+Ostracod,Class,Ostracoda,Animalia,Arthropoda,Ostracoda,,,,,,,,,
+Copepod,Class,Copepoda,Animalia,Arthropoda,Hexanauplia,Copepoda,,,,,,,,copepods (crustaceans)
+Hemiptera: Corixidae (boatman),Family,Corixidae,Animalia,Arthropoda,Insecta,,,Hemiptera,,Corixidae,,,,water boatmen
+Cladocera,Superorder,Cladocera,Animalia,Arthropoda,Insecta,Phyllopoda,Diplostraca,,,,,,,waterfleas (crustaceans)
+Nematode,Phylum,Nematoda,Animalia,Nematoda,,,,,,,,,,nematodes
+Dipteran sp.,Order,Diptera,Animalia,Arthropoda,Insecta,,,Diptera,,,,,,unidentified flies
+Diptera: Chironomid ,Family,Chironomidae,Animalia,Arthropoda,Insecta,,,Diptera,,,,,,non-biting midges
+Diptera: Ceratopogonidae,Family,Ceratopogonidae,Animalia,Arthropoda,Insecta,,,Diptera,,,,,,sandflies
+Diptera : Ceratopogonidae pupa,Family,Ceratopogonidae,Animalia,Arthropoda,Insecta,,,Diptera,,,,,,sandflies
+Diptera: Culicidae,Family,Culicidae,Animalia,Arthropoda,Insecta,,,Diptera,,,,,,mosquitoes
+Diptera: Culicidae Larvae ,Family,Culicidae,Animalia,Arthropoda,Insecta,,,Diptera,,,,,,mosquitoes
+Diptera : Anthomyiidae,Family,Anthomyiidae,Animalia,Arthropoda,Insecta,,,Diptera,,,,,,
+Diptera: Ephydridae,Family,Ephydridae,Animalia,Arthropoda,Insecta,,,Diptera,,,,,,shore flies/brine flies
+Diptera: Stratiomyidae,Family,Stratiomyidae,Animalia,Arthropoda,Insecta,,,Diptera,,,,,,soldier flies
+Amphipod,Order,Amphipoda,Animalia,Arthropoda,"	Malacostraca",,,Amphipoda,,,,,,amphipods
+Lepidoptera-Crambidae,Family,Crambidae,Animalia,Arthropoda,Insecta,,,Lepidoptera,,,,,,grass moths
+Hemiptera- Mesoveliidae,Family,Mesoveliidae,Animalia,Arthropoda,Insecta,,,Hemiptera,,,,,,
+Hemiptera- Notonectidae,Family,Notonectidae,Animalia,Arthropoda,Insecta,,,Hemiptera,,,,,,
+Annelida Sp.,Phylum,Annelida,Animalia,Annelida,,,,,,,,,,
+Annelida: Oligochaete,Subclass,Oligochaeta,Animalia,Annelida,Clitellata,Oligochaeta,,,,,,,,
+Annelida: Polychaete,Class,Polychaeta,Animalia,Annelida,Polychaeta,,,,,,,,,
+Ephemeroptera,Order,Ephemeroptera,Animalia,Arthropoda,Insecta,,,Ephemeroptera,,,,,,
+Odonate,Order,Odonata,Animalia,Arthropoda,Insecta,,,Odonata,,,,,,
+Coleoptera sp.,Order,Coleoptera,Animalia,Arthropoda,Insecta,,,Coleoptera,,,,,,
+Coleoptera: Dytiscidae,Family,Dytiscidae,Animalia,Arthropoda,Insecta,,,Coleoptera,,,,,,
+Coleoptera: Dytiscidae: Liodessus affinis,Species,Liodessus affinis,Animalia,Arthropoda,Insecta,,,Coleoptera,,Dytiscidae,,,Liodessus,
+Coleoptera: Dytiscidae: Agabus,Genus,Agabus,Animalia,Arthropoda,Insecta,,,Coleoptera,,Dytiscidae,,,Agabus,
+Coleoptera: Dytiscidae: Colymbetinae,Subfamily,Colymbetinae,Animalia,Arthropoda,Insecta,,,Coleoptera,,Dytiscidae,Colymbetinae,,,
+Coleoptera: Curculionidae  (Weavil),Family,Curculionidae,Animalia,Arthropoda,Insecta,,,Coleoptera,,Curculionidae,,,,
+Coleoptera - Hydrophilidae,Family,Hydrophilidae,Animalia,Arthropoda,Insecta,,,Coleoptera,,Hydrophilidae,,,,
+Coleoptera - Tropiscernus,Genus,Tropisternus,Animalia,Arthropoda,Insecta,,,Coleoptera,,Hydrophilidae,,,Tropisternus,
+Coleoperta Hydraenidae,Family,Hydraenidae,Animalia,Arthropoda,Insecta,,,Coleoptera,,Hydraenidae,,,,
+Coleoptera- Gyrindae- Gyrinini,Tribe,Gyrinini,Animalia,Arthropoda,Insecta,,,Coleoptera,,Gyrinidae ,,Gyrinini,,
+Ephemeroptera Sp.,Order,Ephemeroptera,Animalia,Arthropoda,Insecta,,,Ephemeroptera,,,,,,
+Tipulidae Larva,Family,Tipulidae,Animalia,Arthropoda,Insecta,,,Diptera,,Tipulidae,,,,
+Plecoptera Sp.,Order,Plecoptera,Animalia,Arthropoda,Insecta,,,Plecoptera,,,,,,
+Arachnida: Acari  (mite),Subclass,Acari,Animalia,Arthropoda,Arachnida,Acari,,,,,,,,
+Trichoptera Sp.,Order,Trichoptera,Animalia,Arthropoda,Insecta,,,Trichoptera,,,,,,
+Collembola (Springtail),Subclass,Collembola,Animalia,Arthropoda,Entognatha,Collembola,,,,,,,,
+Gastropod - snail,Class,Gastropoda,Animalia,Mollusca,,,,,,,,,,
+Mollusk,Phylum,Mollusca,Animalia,Mollusca,NA,,,NA,,,,,,
+Syrphidae,Family,Syrphidae,Animalia,Arthropoda,Insecta,,,Diptera,,,,,,
+Terrestrials,,,,,,,,,,,,,,
+"Isopoda, sphaeroma",Genus,,Animalia,Arthropoda,Malacostraca,,Isopoda,Sphaeromatidae,,,,,Sphaeroma,
+Clam Shrimp,Subclass,Cyclestherida,Animalia,Arthropoda,Phyllopoda,,Diplostraca,Cyclestherida,,,,,,
+Eristalis tenax larvae,Species,Eristalis tenax,Animalia,Arthropoda,Insecta,,,Diptera,,Syrphidae,,,Eristalis,
+Larvae,,,,,,,,,,,,,,
+Crawfish,Infraorder,Astacidea,Animalia,Arthropoda,Malacostraca ,,,Decapoda,Astacidea,,,,,
+Fish ,Class,Actinopterygii,Animalia,Chordata,Actinopterygii,,,,,,,,,
+NZ Mudsnail ,Species,Potamopyrgus antipodarum,Animalia,Mollusca,Gastropoda,,,Littorinimorpha,,,,,Potamopyrgus,

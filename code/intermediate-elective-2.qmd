@@ -1,32 +1,311 @@
 ---
 title: "Intermediate Elective 2"
 author: "Natalie Chen"
-format: pdf
+date: 05-15-2026
+format: 
+  pdf:
+    include-in-header: 
+       text: |
+         \usepackage{fvextra}
+         \DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\}}
+         \DefineVerbatimEnvironment{OutputCode}{Verbatim}{breaklines,commandchars=\\\{\}}
+execute: 
+  warning: false
 ---
 
 
 ```{r}
 #| label: packages
+# general use 
+library(here)
 
+library(tidyverse)
 
+library(janitor)
 
+library(snakecase)
+
+# packages for visualization customization
+
+library(scales)
+library(paletteer)
+library(ggthemes)
+library(RColorBrewer)
+
+# reading in .xlsx files
+library(readxl)
 
 ```
 
 ```{r}
 #| label: data
 
+# taxonomic information
+taxon_list <- read_csv(here("data", "taxon_list.csv")) 
 
+# aquatic invertebrates
+aq_ins <- read_xlsx(here("data", "Aquatic Sampling Data-2026-03-10.xlsx"),
+                    sheet = "Aquatic Insects") 
+
+# site information
+sites <- read_xlsx(here("data", "Aquatic Sampling Data-2026-03-10.xlsx"),
+                   sheet = "sites")
+
+# water quality information
+water_quality <- read_xlsx(here("data", "Aquatic Sampling Data-2026-03-10.xlsx"),
+                           sheet = "Water Quality",
+                           na = c("", "n/a", "N/A", "over", "173+")) 
 
 
 ```
 
-#1. 
+#1. Explain
 
 - I chose the most popular Ikea designers because I felt that it would be a good type of visualization to show the most abundance invertebrate species at NCOS.
 - This visualization makes sense for this the invertebrate visualization because there are 15+ different designers, which is similar to how many different taxa there are.
 - All Taxa will be shown in my visualization. There will be a different color for each taxon, and the amount of the color will show how abundant they show up in samples.
 
+#2. Plan
 
 
 
+
+#3. Code
+
+```{r}
+#| label: ncos sites
+
+# creating new object from sites
+ncos_sites <- sites |> 
+  
+  # filter to only include NCOS quarterly sampling sites
+  filter(sector == "NCOS" & sampling_frequency == "Quarterly")
+
+```
+
+```{r}
+#| label: cleaning-water-quality
+
+water_quality_clean <- water_quality |> 
+  
+  # cleaning column names
+  clean_names() |> 
+  
+  # filtering join: only include sites in ncos_sites
+  # keep all the rows on the left that match up with rows on the right
+  semi_join(ncos_sites, by = "site") |> 
+  
+  # combine date and site together and remove those indiv. columns
+  unite("date_site", date, site, remove = TRUE) |> 
+  
+  # group by date_site
+  group_by(date_site) |> 
+  
+  # create new columns that show median of each variable at each date_site
+  # because there are multiple samples at the same site at different depths
+  summarize(med_ph = median(p_h, na.rm = TRUE),
+            med_sal = median(salinity_ppt, na.rm = TRUE),
+            med_do = median(dissolved_oxygen_mg_l, na.rm = TRUE)) |> 
+  
+  # ungroup
+  ungroup() |> 
+  
+  # filter out the salinity outlier
+  filter(date_site != "2022-08-12_NVBR")
+
+
+```
+
+```{r}
+#| label: cleaning-taxon
+
+# creating new object from taxon_list
+taxon_list_clean <- taxon_list |> 
+  
+  # converted taxon name values to snake case (lowercase)
+  mutate(verbatim_name = to_any_case(verbatim_name,
+                                     case = "snake"))
+
+```
+
+```{r}
+#| label: cleaning-aq-ins
+
+# creating new clean aquatic inverts object from aquatic inverts
+aq_ins_clean <- aq_ins |> 
+  
+  # cleaning column names
+  clean_names() |> 
+  
+  # filtering join: only include quarterly NCOS surveys from ncos_sites
+  semi_join(ncos_sites, by = "site") |> 
+  
+  # renaming column to just date
+  rename(date = date_on_vial) |> 
+  
+  # select columns of interest
+  select(date, sample_type, site,
+         
+         # 9 most abundant taxon
+         ostracod,
+         copepod,
+         hemiptera_corixidae_boatman,
+         cladocera,
+         nematode,
+         diptera_ceratopogonidae, 
+         annelida_oligochaete,
+         diptera_chironomid,
+         annelida_polychaete) |>
+  
+  # filter to only include filtered beaker samples 
+  filter(sample_type %in% c("FB250", "FB 250"))  |> 
+  
+  
+  pivot_longer(
+    # cols = columns to make longer
+    cols = ostracod:annelida_polychaete,
+    # new column for the old column names
+    names_to = "taxon",
+    # new column for the values in each of the old columns
+    values_to = "abundance" 
+  ) |> 
+  
+  # group by the date, site, and taxon
+  group_by(date, site, taxon) |> 
+  
+  # calculate average abundance per liter (sum abundance divided by 7.5 liters)
+  summarize(avg_per_lit = sum(abundance, na.rm = TRUE)/7.5) |> 
+  
+  # ungroup
+  ungroup() |> 
+  
+   # create a new column called `date_site` to join with water quality
+   # don't remove the original columns
+  unite("date_site", date, site, remove = FALSE) |> 
+  
+  # join with water quality clean
+  # wqc has `date_site` column as well
+  left_join(water_quality_clean, by = "date_site") |> 
+  
+  # join with taxonomic information from taxon list
+  # verbatim_name column in taxon_list_clean matches with taxon column in aq_ins_clean
+  left_join(taxon_list_clean, by = c("taxon" = "verbatim_name")) |> 
+
+  # fill in full site names
+  mutate(site_full = case_when(
+    site == "NVBR" ~ "North of Venoco Bridge",
+    site == "NEC" ~ "East Channel",
+    site == "NMC" ~ "Main Channel",
+    site == "NPB" ~ "South of Phelps Bridge",
+    site == "NPB1" ~ "North of Phelps Bridge",
+    site == "NPB2" ~ "Phelps Road",
+    site == "NWP" ~  "West Pond",
+    site == "NDC" ~ "Devereux Creek"
+  ))  |> 
+  
+   # setting factor levels for full site name by median salinity
+   mutate(site_full = fct_reorder(site_full, med_sal, .fun = "median", .na_rm = TRUE),
+          site_full = fct_rev(site_full))
+
+
+```
+
+```{r}
+#| label: visualization cleaning
+
+data <- aq_ins_clean |> 
+  
+  select(taxon, avg_per_lit) |> 
+  
+  group_by(taxon) |> 
+  
+  mutate(total_avg_abundance = sum(avg_per_lit)) |> 
+  
+  ungroup() |> 
+  
+  mutate(log_total_avg = log(total_avg_abundance + 1)) |> 
+  
+  select(taxon, log_total_avg) |> 
+  
+  unique() |> 
+  
+  # change taxon values to title case
+   mutate(taxon = str_replace_all(taxon, "_", " ") |> str_to_title())
+
+data <- mutate_at(data, vars(taxon), as.factor)  
+  
+glimpse(data)
+
+```
+
+``` {r}
+#| label: visualization
+empty_bar <- 2
+# Add lines to the initial dataset
+# to_add <- matrix(NA, empty_bar, ncol(data))
+# colnames(to_add) <- colnames(data)
+# data <- rbind(data, to_add)
+
+data <- data[order(-data$log_total_avg), ]
+data$id <- seq(1, nrow(data))
+
+data$id <- seq(1, nrow(data))
+
+
+# Get the name and the y position of each label
+label_data <- data
+number_of_bar <- nrow(label_data)
+angle <- 90 - 360 * (label_data$id-0.5) /number_of_bar     
+label_data$hjust <- ifelse(angle < -90, 1, 0)
+label_data$angle <- ifelse(angle < -90, angle+180, angle)
+
+pal <- brewer.pal(11, "Spectral")
+
+
+# Plotting
+p <- ggplot(data)+
+  
+  geom_bar(aes(x=as.factor(id), y=log_total_avg, fill=taxon), stat="identity") +
+  scale_fill_manual(values=pal)+
+  
+  ylim(-30,90) +
+  
+  theme_bw() + 
+  
+  theme_minimal() +
+  
+  theme(
+    axis.text = element_blank(),
+    axis.title = element_blank(),
+    panel.grid = element_blank(),
+    plot.margin = unit(rep(-1,4,), "cm")) +
+  
+  
+  annotate(geom = "text",
+           x=0,y=-50,
+           hjust=.5, vjust=1,
+           label="IKEA most popular\n designers",
+           size=4.3, lineheight=.8,
+           family="Staatliches Regular",
+           color="black") +
+  
+  
+  annotate(geom = "text",
+           x=0,y=200,
+           vjust=1,
+           hjust=.5,
+           label = "Data:  Kaggle & TidyTuesday | Graphic: Cristina Cametti - @CameCry",
+           size=2.5,
+           color="black") +
+  
+  
+  coord_polar(start = 0)  +
+  
+  
+  geom_text(data=label_data, aes(x=id, y=log_total_avg + 1, label= taxon, hjust=hjust), color="black", 
+            fontface="bold",alpha=0.6, size=3.4, angle=label_data$angle, inherit.aes = FALSE ) 
+
+p
+
+
+```
