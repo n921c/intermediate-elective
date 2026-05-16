@@ -66,9 +66,12 @@ water_quality <- read_xlsx(here("data", "Aquatic Sampling Data-2026-03-10.xlsx")
 - All Taxa will be shown in my visualization. There will be a different color for each taxon, and the amount of the color will show how abundant they show up in samples.
 
 #2. Plan
+```{r}
+#| label: plan
 
-<img width="1667" height="803" alt="Image" src="https://github.com/user-attachments/assets/30628a77-b0df-4695-a058-7f0314750e8e" />
-
+# adds in jpeg
+knitr::include_graphics(here("data", "plan.jpeg"))
+```
 
 
 
@@ -215,40 +218,47 @@ aq_ins_clean <- aq_ins |>
 ```{r}
 #| label: visualization cleaning
 
+# create new object 
 data <- aq_ins_clean |> 
   
+  # select only taxon and average
   select(taxon, avg_per_lit) |> 
   
+  # group by taxon
   group_by(taxon) |> 
   
+  # sum up all averages  
   mutate(total_avg_abundance = sum(avg_per_lit)) |> 
   
+  # ungroup
   ungroup() |> 
   
+  # transform the total average per liter
   mutate(log_total_avg = log(total_avg_abundance + 1)) |> 
   
+  # keep taxon and transformed log
   select(taxon, log_total_avg) |> 
   
+  # keep unique rows
   unique() |> 
   
   # change taxon values to title case
    mutate(taxon = str_replace_all(taxon, "_", " ") |> str_to_title())
 
+# set factors
 data <- mutate_at(data, vars(taxon), as.factor)  
-  
-glimpse(data)
 
 ```
 
 ``` {r}
 #| label: visualization
 
+# reorder data df and set a new row id
 data <- data[order(-data$log_total_avg), ]
 data$id <- seq(1, nrow(data))
 
-data$id <- seq(1, nrow(data))
-
-
+# copied from inspiration R file
+# set up visualization
 # Get the name and the y position of each label
 label_data <- data
 number_of_bar <- nrow(label_data)
@@ -258,18 +268,23 @@ label_data$angle <- ifelse(angle < -90, angle+180, angle)
 
 pal <- brewer.pal(11, "Spectral")
 
-
+# end of copied code
+#
 # Plotting
 p <- ggplot(data)+
   
   geom_bar(aes(x=as.factor(id), y=log_total_avg, fill=taxon), stat="identity") +
+  
+  # colors
   scale_fill_manual(values=pal)+
   
+  # setting dimensions
   ylim(-40,90) +
   
+  # setting theme
   theme_bw() + 
-  
   theme_minimal() +
+  
   
   theme(
     axis.text = element_blank(),
@@ -277,14 +292,13 @@ p <- ggplot(data)+
     panel.grid = element_blank(),
     plot.margin = unit(rep(-1,4,), "cm")) +
   
-  
+  # setting labels
   annotate(geom = "text",
            x=0,y= -30,
            hjust=.5, vjust=1,
            label="Taxon Abundance \n at NCOS",
            size=3, lineheight=.8,
            color="black") +
-  
   
   annotate(geom = "text",
            x=0,y=200,
@@ -294,13 +308,13 @@ p <- ggplot(data)+
            size=2.5,
            color="black") +
   
-  
   coord_polar(start = 0)  +
   
-  
+  # setting labels
   geom_text(data=label_data, aes(x=id, y=log_total_avg + 1, label= taxon, hjust=hjust), color="black", 
             fontface="bold",alpha=0.6, size=3.4, angle=label_data$angle, inherit.aes = FALSE ) 
 
+# display plot
 p
 
 
